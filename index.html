@@ -163,6 +163,7 @@
             transition: transform 0.28s cubic-bezier(.2, .8, .2, 1), box-shadow 0.28s;
             position: relative;
             display: block;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -173,13 +174,9 @@
         .product-img {
             width: 100%;
             height: auto;
-            /* let image define its height */
             max-height: 360px;
-            /* cap so very tall images don't blow layout */
             object-fit: contain;
-            /* show whole image inside available box */
             background-color: #f3f3f3;
-            /* neutral bg when image aspect differs */
             display: block;
             object-position: center center;
         }
@@ -225,6 +222,134 @@
             font-weight: 700;
             font-size: 0.95rem;
             display: inline-block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--highlight);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-details {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .product-details h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .product-details p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .price-section .price-badge {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .buy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: var(--accent);
         }
 
         /* Sección de características */
@@ -404,6 +529,19 @@
             .hero p {
                 font-size: 1rem;
             }
+
+            .product-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10px;
+                max-height: 95vh;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -448,54 +586,233 @@
             <div class="product-grid">
 
                 <!-- Producto 1 -->
-                <div class="product-card">
-                    <img src="./modelo.jpg" alt="HIBBANK's Gorro" class="product-img">
+                <div class="product-card" data-modal="modal-modelo">
+                    <img src="./modelo.jpg" alt="HIBBANK's Modelo" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Modelo</h3>
+                        <p>Haz clic para ver todas las vistas</p>
                     </div>
                 </div>
 
                 <!-- Producto 2 -->
-                <div class="product-card">
+                <div class="product-card" data-modal="modal-gorro">
                     <img src="./gorro.jpg" alt="HIBBANK's Gorro" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Gorro</h3>
-                        <p>Gorro deportivo de alta calidad con ajuste perfecto y diseño moderno para completar tu
-                            outfit.</p>
+                        <p>Gorro deportivo de alta calidad con ajuste perfecto</p>
                     </div>
                 </div>
 
                 <!-- Producto 3 -->
-                <div class="product-card">
-                    <img src="./mentalityrojo.jpg" alt="HIBBANK's Gorro" class="product-img">
+                <div class="product-card" data-modal="modal-camisa-roja">
+                    <img src="./mentalityrojo.jpg" alt="HIBBANK's Camisa Roja" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Camisa Roja</h3>
-                        <p>Camiseta de entrenamiento en rojo vibrante, con tecnología de secado rápido y máxima
-                            comodidad.</p>
+                        <p>Camiseta de entrenamiento en rojo vibrante</p>
                     </div>
                 </div>
 
                 <!-- Producto 4 -->
-                <div class="product-card">
-                    <img src="./mentalitynegro.jpg" alt="HIBBANK's Gorro" class="product-img">
+                <div class="product-card" data-modal="modal-camisa-negra">
+                    <img src="./mentalitynegro.jpg" alt="HIBBANK's Camisa Negra" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Camisa Negra</h3>
-                        <p>Camiseta negra de alto rendimiento, ideal para entrenamientos intensos.</p>
+                        <p>Camiseta negra de alto rendimiento</p>
                     </div>
                 </div>
 
                 <!-- Producto 5 -->
-                <div class="product-card">
-                    <img src="./derecho.jpg" alt="HIBBANK's Gorro" class="product-img">
+                <div class="product-card" data-modal="modal-camisa">
+                    <img src="./derecho.jpg" alt="HIBBANK's Camisa" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Camisa</h3>
-                        <p>Camiseta clásica de entrenamiento con diseño ergonómico y tejido transpirable de alta
-                            calidad.</p>
+                        <p>Camiseta clásica de entrenamiento</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modales para cada producto -->
+    
+    <!-- Modal para Modelo -->
+    <div class="modal" id="modal-modelo">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HIBBANK's Modelo - Todas las Vistas</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-gallery">
+                    <div class="gallery-item">
+                        <img src="./modelo.jpg" alt="Modelo - Vista frontal">
+                        <p>Vista frontal</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./modelo-lateral.jpg" alt="Modelo - Vista lateral">
+                        <p>Vista lateral</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./modelo-espalda.jpg" alt="Modelo - Vista trasera">
+                        <p>Vista trasera</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./modelo-detalle.jpg" alt="Modelo - Detalle">
+                        <p>Detalle de tela</p>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3>Descripción del Producto</h3>
+                    <p>Nuestro modelo estrella que combina estilo y funcionalidad para un entrenamiento óptimo. Diseñado con tecnología de secado rápido y máxima comodidad.</p>
+                    <p>Material: 92% Poliéster, 8% Spandex</p>
+                    <div class="price-section">
+                        <div class="price-badge">$59.99</div>
+                        <button class="buy-btn">Comprar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Gorro -->
+    <div class="modal" id="modal-gorro">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HIBBANK's Gorro</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-gallery">
+                    <div class="gallery-item">
+                        <img src="./gorro.jpg" alt="Gorro - Vista frontal">
+                        <p>Vista frontal</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./gorro-lateral.jpg" alt="Gorro - Vista lateral">
+                        <p>Vista lateral</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./gorro-detalle.jpg" alt="Gorro - Detalle">
+                        <p>Detalle de logo</p>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3>Descripción del Producto</h3>
+                    <p>Gorro deportivo de alta calidad con ajuste perfecto y diseño moderno para completar tu outfit. Ideal para entrenamientos al aire libre.</p>
+                    <p>Material: 100% Algodón</p>
+                    <div class="price-section">
+                        <div class="price-badge">$24.99</div>
+                        <button class="buy-btn">Comprar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Camisa Roja -->
+    <div class="modal" id="modal-camisa-roja">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HIBBANK's Camisa Roja</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-gallery">
+                    <div class="gallery-item">
+                        <img src="./mentalityrojo.jpg" alt="Camisa Roja - Vista frontal">
+                        <p>Vista frontal</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-roja-lateral.jpg" alt="Camisa Roja - Vista lateral">
+                        <p>Vista lateral</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-roja-espalda.jpg" alt="Camisa Roja - Vista trasera">
+                        <p>Vista trasera</p>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3>Descripción del Producto</h3>
+                    <p>Camiseta de entrenamiento en rojo vibrante, con tecnología de secado rápido y máxima comodidad. Perfecta para sesiones intensas.</p>
+                    <p>Material: 95% Poliéster, 5% Elastano</p>
+                    <div class="price-section">
+                        <div class="price-badge">$34.99</div>
+                        <button class="buy-btn">Comprar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Camisa Negra -->
+    <div class="modal" id="modal-camisa-negra">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HIBBANK's Camisa Negra</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-gallery">
+                    <div class="gallery-item">
+                        <img src="./mentalitynegro.jpg" alt="Camisa Negra - Vista frontal">
+                        <p>Vista frontal</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-negra-lateral.jpg" alt="Camisa Negra - Vista lateral">
+                        <p>Vista lateral</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-negra-detalle.jpg" alt="Camisa Negra - Detalle">
+                        <p>Detalle de costura</p>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3>Descripción del Producto</h3>
+                    <p>Camiseta negra de alto rendimiento, ideal para entrenamientos intensos. Diseño minimalista con máximo confort.</p>
+                    <p>Material: 92% Poliéster, 8% Spandex</p>
+                    <div class="price-section">
+                        <div class="price-badge">$34.99</div>
+                        <button class="buy-btn">Comprar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Camisa -->
+    <div class="modal" id="modal-camisa">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HIBBANK's Camisa</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-gallery">
+                    <div class="gallery-item">
+                        <img src="./derecho.jpg" alt="Camisa - Vista frontal">
+                        <p>Vista frontal</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-lateral.jpg" alt="Camisa - Vista lateral">
+                        <p>Vista lateral</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./camisa-espalda.jpg" alt="Camisa - Vista trasera">
+                        <p>Vista trasera</p>
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h3>Descripción del Producto</h3>
+                    <p>Camiseta clásica de entrenamiento con diseño ergonómico y tejido transpirable de alta calidad. Perfecta para cualquier actividad física.</p>
+                    <p>Material: 100% Algodón peinado</p>
+                    <div class="price-section">
+                        <div class="price-badge">$32.99</div>
+                        <button class="buy-btn">Comprar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Sección de Características -->
     <section class="features" id="caracteristicas">
@@ -628,6 +945,52 @@
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Funcionalidad para los modales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Abrir modal al hacer clic en una tarjeta de producto
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Evitar scroll en el fondo
+                    }
+                });
+            });
+
+            // Cerrar modal al hacer clic en el botón de cerrar
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restaurar scroll
+                    }
+                });
+            });
+
+            // Cerrar modal al hacer clic fuera del contenido
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = ''; // Restaurar scroll
+                    }
+                });
+            });
+
+            // Cerrar modal con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal.active').forEach(modal => {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restaurar scroll
                     });
                 }
             });
