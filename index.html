@@ -286,7 +286,7 @@
 
         .product-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -296,17 +296,32 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            background: #f9f9f9;
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
             display: block;
+            background-color: #f3f3f3;
+        }
+
+        .gallery-item p {
+            padding: 12px 15px;
+            margin: 0;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            background: white;
+            border-top: 1px solid #eee;
         }
 
         .product-details {
@@ -542,6 +557,10 @@
             .modal-body {
                 padding: 1rem;
             }
+            
+            .gallery-item img {
+                max-height: 300px;
+            }
         }
     </style>
 </head>
@@ -605,7 +624,7 @@
 
                 <!-- Producto 3 -->
                 <div class="product-card" data-modal="modal-camisa-roja">
-                    <img src="./mentalityrojo.jpg" alt="HIBBANK's Camisa Roja" class="product-img">
+                    <img src="./resilenceRed.jpg" alt="HIBBANK's Camisa Roja" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Resilience Red</h3>
                         <p>Camiseta de entrenamiento</p>
@@ -614,7 +633,7 @@
 
                 <!-- Producto 4 -->
                 <div class="product-card" data-modal="modal-camisa-negra">
-                    <img src="./mentalitynegro.jpg" alt="HIBBANK's Camisa Negra" class="product-img">
+                    <img src="./resilenceblack.jpg" alt="HIBBANK's Camisa Negra" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Resilience Black</h3>
                         <p>Camiseta negra de alto rendimiento</p>
@@ -623,7 +642,7 @@
 
                 <!-- Producto 5 -->
                 <div class="product-card" data-modal="modal-camisa">
-                    <img src="./derecho.jpg" alt="HIBBANK's Camisa" class="product-img">
+                    <img src="./resilensewhite.jpg" alt="HIBBANK's Camisa" class="product-img">
                     <div class="product-info">
                         <h3>HIBBANK's Resilience White</h3>
                         <p>Camiseta clásica de entrenamiento</p>
@@ -705,12 +724,11 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="product-gallery">
                     <div class="gallery-item">
                         <img src="./resilenceRed.jpg" alt="Camisa Roja - Logo">
                         <p>Vista Logo</p>
                     </div>
-                </div>
-            <div class="modal-body">
                     <div class="gallery-item">
                         <img src="./resilenceTraseraRed.jpg" alt="Camisa Roja - Vista trasera">
                         <p>Vista trasera</p>
@@ -733,12 +751,11 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="product-gallery">
                     <div class="gallery-item">
                         <img src="./resilenceblack.jpg" alt="Camisa Negra - Logo">
                         <p>Vista Logo</p>
                     </div>
-                </div>
-            <div class="modal-body">
                     <div class="gallery-item">
                         <img src="./resilenceTraserablack.jpg" alt="Camisa Negra - Vista trasera">
                         <p>Vista trasera</p>
@@ -761,12 +778,11 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="product-gallery">
                     <div class="gallery-item">
                         <img src="./resilencewhite.jpg" alt="Camisa Blanca - Logo">
                         <p>Vista Logo</p>
                     </div>
-                </div>
-            <div class="modal-body">
                     <div class="gallery-item">
                         <img src="./resilenceTraseraWhite.jpg" alt="Camisa Blanca - Vista trasera">
                         <p>Vista trasera</p>
